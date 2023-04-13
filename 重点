@@ -1,0 +1,140 @@
+1.注意： 组件名称必须以大写字母开头。
+React 会将以小写字母开头的组件视为原生 DOM 标签。
+例如，<div /> 代表 HTML 的 div 标签，
+而 <Welcome /> 则代表一个组件，并且需在作用域内使用 Welcome。
+
+2.组件无论是使用函数声明还是通过class声明，都不能修改自身的props
+所有 React 组件都必须像纯函数一样保护它们的 props 不被更改。
+
+3.State 与 props 类似，但是 state 是私有的，并且完全受控于当前组件
+
+4.将函数组件转换成 class 组件
+通过以下五步将 Clock 的函数组件转成 class 组件：
+
+创建一个同名的 ES6 class，并且继承于 React.Component。
+添加一个空的 render() 方法。
+将函数体移动到 render() 方法之中。
+在 render() 方法中使用 this.props 替换 props。
+删除剩余的空函数声明。
+
+5.向 class 组件中添加局部的 state
+把 render() 方法中的 this.props.date 替换成 this.state.date
+
+6.生命周期
+组件第一次被渲染  --- 挂载  mount  componentDidMount
+组件被删除   --- 卸载  unmount  componentWillUnmount
+componentDidMount  组件已经被渲染到 DOM 中后运行
+
+7.State
+不要直接修改State    使用setState()
+State更新可能是异步的   不要依赖他们的值来更新
+setState((state, props) => {
+  counter: state.counter + props.increment
+})
+this.setState(function(state, props) {
+  return {
+    counter: state.counter + props.increment
+  };
+});
+State的更新会被合并
+
+数据是向下流动的，不管父组件还是子组件都无法知道某个组件是有状态的还是无状态的
+这就是为什么称 state 为局部的或是封装的的原因。
+除了拥有并设置了它的组件，其他组件都无法访问。
+
+8.react事件采用小驼峰式 不是纯小写
+<button onClick={activateLasers}>
+  Activate Lasers
+</button>
+不能通过返回false组织默认行为
+必须显示使用preventDefault.
+// 传统
+<a href="#" onclick="console.log('The link was clicked.'); return false">
+  Click me
+</a>
+// React
+function ActionLink() {
+  function handleClick(e) {
+    e.preventDefault();
+    console.log('The link was clicked.');
+  }
+
+  return (
+    <a href="#" onClick={handleClick}>
+      Click me
+    </a>
+  )
+}
+使用react时，不需要使用addEventListener为已创建的dom元素添加监听器。
+只需要在元素初始渲染的时候添加监听器即可。
+
+9.向事件处理程序传递参数
+<button onClick={(e) => this.deleteRow(id, e)}>Delete Row</button>
+<button onClick={this.deleteRow.bind(this, id)}>Delete Row</button>
+
+10.条件渲染
+if 或者条件运算符创建元素来表现当前的状态
+使用变量存储元素
+阻止条件渲染 -- rende返回null，不进行任何渲染。
+render 方法返回null不影响组件的生命周期。
+
+11.列表&key
+使用{} 在JSX构建一个元素集合
+key 帮助识别哪些元素改变了
+
+12.用key提取组件
+元素的key只有放在就近的数组上下文中才有意义。
+在map()方法中的元素需要设置key属性
+key在兄弟节点之间必须唯一。
+key会传递信息给react，但不会传递给组件。如果组件需要使用key属性值，用其他属性名显示传递。
+
+13.JSX允许嵌入任何表达式
+
+14.受控组件--渲染调单的React组件还控制着用户输入过程中表单发生的操作。
+
+15.非受控组件 value只读
+
+16.处理多个输入
+当处理多个input元素时，可以给每个元素添加name 属性，
+并让处理函数根据event.target.name的值选择要执行的操作。
+
+17.受控组件制定value的prop会阻止用户更改输入
+但是如果将value置为null或undefined就可以编辑
+
+18.受控组件的替代品---Formik
+
+19.状态提升
+将多个组件中需要共享的state向上移动到他们的最近共同父组件中
+便可实现共享state。
+
+20.组合
+组件通过JSX嵌套，将任意组件作为子组件传递给别的。
+少数情况需要在一个组件预留“洞”
+这种情况不适用children，而是自行约定：将所需内容传入props，并使用相应的prop
+
+21.纯函数
+只负责自己的任务。 -- 它不会更改在该函数调用前，就已存在的对象或变量
+输入相同，则输出相同 -- 给定相同的输入，纯函数应总是返回相同的结果。
+
+22.Fragment 语法的简写形式 <> </> 无法接受 key 值，
+所以你只能要么把生成的节点用一个 <div> 标签包裹起来，
+要么使用长一点但更明确的 <Fragment> 写法：
+Fragment 标签本身并不会出现在 DOM 上。
+
+23.<Recipe {...recipe} key={recipe.id} /> 是一种简写方式，
+它表示“把 recipe 对象里的每个属性都作为 props 传给 Recipe 组件”。
+
+24.通常将事件处理程序命名为handle，后接事件名。
+可以在JSX中定义一个内联的时间处理函数
+<button onClick={function handleClick() {
+  alert('你点击了我！');
+}}>
+或者使用箭头函数
+<button onClick={() => {
+  alert('你点击了我！');
+}}>
+传递给时间处理函数的函数应直接传递，而非调用
+传递一个函数 <button onClick={handleClick}>
+调用一个函数 <button onClick={handleClick()}>
+最后的（）会在渲染过程中立即出发函数，即使没有任何点击。这是因为在JSX{}之间的js会立即执行。
+

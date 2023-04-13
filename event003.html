@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Hello React!</title>
+<script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+<script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+<script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+
+<div id="root"></div>
+<script type="text/babel">
+
+function Button({ onSmash, children}) {
+  return (
+    <button onClick={onSmash}>{children}</button>
+  )
+}
+
+function PlayButton({movieName}) {
+  function handlePlayClick() {
+    alert(`正在播放${movieName}`)
+  }
+  return (
+    <Button onSmash={handlePlayClick}>
+      播放"{movieName}"
+    </Button>
+  )
+}
+
+function UploadButton() {
+  return (
+    <Button onSmash={() => alert("hshs")}>上传</Button>
+  )
+}
+
+function App() {
+  return (
+    <div>
+      <PlayButton movieName="魔女宅急便" />
+      <UploadButton/>
+    </div>
+  )
+}
+
+
+
+ReactDOM.render(
+  App(),
+  document.getElementById('root')
+)
+
+</script>
+
+</body>
+<style>
+  
+</style>
+</html>

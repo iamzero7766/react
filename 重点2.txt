@@ -1,0 +1,26 @@
+1.this.props.children
+可以拿到用户在组件里面放置的内容
+this.props.children 的值有三种可能：
+如果当前组件没有子节点 -- undefined
+如果有一个子节点 -- object
+如果有多个子节点 -- array
+
+2.内置组件仅支持浏览器事件名称
+但是当构建自己的组件，可以自定义事件处理函数的props
+props应该以on开头，后跟一个大写字母
+
+3.在react中所有事件都会传播，除了onScroll
+仅适用于附加到的JSX标签。
+
+4.阻止冒泡 e.stopPropagation();
+阻止默认行为  e.preventDefault();
+
+5.局部变量无法在多次渲染中持久保存。
+当ract再次渲染这个组件，他会从头开始渲染
+更改局部变量不会触发渲染。
+useState -- 
+State变量用于保存渲染间的数据
+State setter函数更新变量并触发react再次渲染组件
+
+6.Hooks -- 以use开头的函数 -- 只能在组件或自定义Hook的最顶层调用
+

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Hello React!</title>
+<script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+<script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+<script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+
+<div id="root"></div>
+<div id="root2"></div>
+<div id="root3"></div>
+<script type="text/babel">
+
+function Button() {
+
+  function handleClick() {
+    console.log("点击")
+  }
+
+  return (
+    <button onClick={handleClick}>
+      未绑定任何事件
+    </button>
+  )
+}
+
+function AlertButton({ message, children}) {
+  return (
+    <button onClick={() => alert(message)}>{children}</button>
+  )
+}
+
+function App() {
+  return (
+    <div>
+      <AlertButton message="正在播放">播放电影</AlertButton>
+      <AlertButton message="正在上传">上传图片</AlertButton>
+    </div>
+  )
+}
+
+ReactDOM.render(
+  Button(),
+  document.getElementById('root')
+)
+
+ReactDOM.render(
+  App(),
+  document.getElementById('root2')
+)
+
+</script>
+
+</body>
+<style>
+  
+</style>
+</html>
